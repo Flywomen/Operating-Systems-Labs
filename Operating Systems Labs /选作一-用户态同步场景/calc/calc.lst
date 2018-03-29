@@ -1,0 +1,73 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_api_sharealloc
+     7 00000000                                 	EXTERN	_api_get
+     8 00000000                                 	EXTERN	_sprintf
+     9 00000000                                 	EXTERN	_api_putstr0
+    10 00000000                                 [FILE "calc.c"]
+    11 00000000                                 	GLOBAL	_buffer_size
+    12                                          [SECTION .data]
+    13 00000000                                 	ALIGNB	4
+    14 00000000                                 _buffer_size:
+    15 00000000 00000005                        	DD	5
+    16 00000004                                 	GLOBAL	_time_waiting
+    17 00000004                                 	ALIGNB	4
+    18 00000004                                 _time_waiting:
+    19 00000004 05F5E100                        	DD	100000000
+    20 00000008                                 LC0:
+    21 00000008 61 61 61 61 00                  	DB	"aaaa",0x00
+    22 0000000D                                 LC1:
+    23 0000000D 20 25 64 00                     	DB	" %d",0x00
+    24 00000011                                 LC2:
+    25 00000011 0A 00                           	DB	0x0A,0x00
+    26                                          [SECTION .text]
+    27 00000000                                 	GLOBAL	_HariMain
+    28 00000000                                 _HariMain:
+    29 00000000 55                              	PUSH	EBP
+    30 00000001 89 E5                           	MOV	EBP,ESP
+    31 00000003 57                              	PUSH	EDI
+    32 00000004 56                              	PUSH	ESI
+    33 00000005 53                              	PUSH	EBX
+    34 00000006 83 EC 70                        	SUB	ESP,112
+    35 00000009 6A 1A                           	PUSH	26
+    36 0000000B 68 [00000008]                   	PUSH	LC0
+    37 00000010 E8 [00000000]                   	CALL	_api_sharealloc
+    38 00000015 5A                              	POP	EDX
+    39 00000016 89 C7                           	MOV	EDI,EAX
+    40 00000018 59                              	POP	ECX
+    41 00000019                                 L15:
+    42 00000019 31 F6                           	XOR	ESI,ESI
+    43 0000001B                                 L9:
+    44 0000001B 56                              	PUSH	ESI
+    45 0000001C 8D 5D 84                        	LEA	EBX,DWORD [-124+EBP]
+    46 0000001F 57                              	PUSH	EDI
+    47 00000020 46                              	INC	ESI
+    48 00000021 E8 [00000000]                   	CALL	_api_get
+    49 00000026 A3 [00000014]                   	MOV	DWORD [_data],EAX
+    50 0000002B 50                              	PUSH	EAX
+    51 0000002C 68 [0000000D]                   	PUSH	LC1
+    52 00000031 53                              	PUSH	EBX
+    53 00000032 E8 [00000000]                   	CALL	_sprintf
+    54 00000037 53                              	PUSH	EBX
+    55 00000038 E8 [00000000]                   	CALL	_api_putstr0
+    56 0000003D 83 C4 18                        	ADD	ESP,24
+    57 00000040 83 FE 04                        	CMP	ESI,4
+    58 00000043 7E D6                           	JLE	L9
+    59 00000045 68 [00000011]                   	PUSH	LC2
+    60 0000004A BE 00000005                     	MOV	ESI,5
+    61 0000004F E8 [00000000]                   	CALL	_api_putstr0
+    62 00000054 58                              	POP	EAX
+    63 00000055 A1 [00000004]                   	MOV	EAX,DWORD [_time_waiting]
+    64 0000005A                                 L19:
+    65 0000005A 39 C6                           	CMP	ESI,EAX
+    66 0000005C 7D BB                           	JGE	L15
+    67 0000005E 46                              	INC	ESI
+    68 0000005F EB F9                           	JMP	L19
+    69 00000061                                 	GLOBAL	_data
+    70                                          [SECTION .data]
+    71 00000013 00                              	ALIGNB	4
+    72 00000014                                 _data:
+    73 00000014 00 00 00 00                     	RESB	4

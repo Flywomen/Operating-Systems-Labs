@@ -1,0 +1,117 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_api_sharealloc
+     7 00000000                                 	EXTERN	_api_getin
+     8 00000000                                 	EXTERN	_api_getout
+     9 00000000                                 	EXTERN	_api_get
+    10 00000000                                 	EXTERN	_sprintf
+    11 00000000                                 	EXTERN	_api_putstr1
+    12 00000000                                 	EXTERN	_api_changeout
+    13 00000000                                 	EXTERN	_api_change
+    14 00000000                                 [FILE "bball.c"]
+    15 00000000                                 	GLOBAL	_buffer_size
+    16                                          [SECTION .data]
+    17 00000000                                 	ALIGNB	4
+    18 00000000                                 _buffer_size:
+    19 00000000 00000005                        	DD	5
+    20 00000004                                 	GLOBAL	_time_waiting
+    21 00000004                                 	ALIGNB	4
+    22 00000004                                 _time_waiting:
+    23 00000004 01312D00                        	DD	20000000
+    24 00000008                                 LC0:
+    25 00000008 61 61 61 61 00                  	DB	"aaaa",0x00
+    26 0000000D                                 LC2:
+    27 0000000D 20 25 64 00                     	DB	" %d",0x00
+    28 00000011                                 LC3:
+    29 00000011 0A 54 68 65 20 63 6F 6E 73 75   	DB	0x0A,"The consumer is eating......",0x0A,0x00
+       0000001B 6D 65 72 20 69 73 20 65 61 74 
+       00000025 69 6E 67 2E 2E 2E 2E 2E 2E 0A 
+       0000002F 00 
+    30 00000030                                 LC1:
+    31 00000030 0A 54 68 65 20 73 74 6F 72 65   	DB	0x0A,"The store is empty,waiting......",0x0A,0x00
+       0000003A 20 69 73 20 65 6D 70 74 79 2C 
+       00000044 77 61 69 74 69 6E 67 2E 2E 2E 
+       0000004E 2E 2E 2E 0A 00 
+    32                                          [SECTION .text]
+    33 00000000                                 	GLOBAL	_HariMain
+    34 00000000                                 _HariMain:
+    35 00000000 55                              	PUSH	EBP
+    36 00000001 89 E5                           	MOV	EBP,ESP
+    37 00000003 57                              	PUSH	EDI
+    38 00000004 56                              	PUSH	ESI
+    39 00000005 53                              	PUSH	EBX
+    40 00000006 83 EC 74                        	SUB	ESP,116
+    41 00000009 6A 1A                           	PUSH	26
+    42 0000000B 68 [00000008]                   	PUSH	LC0
+    43 00000010 E8 [00000000]                   	CALL	_api_sharealloc
+    44 00000015 89 C6                           	MOV	ESI,EAX
+    45 00000017 50                              	PUSH	EAX
+    46 00000018 E8 [00000000]                   	CALL	_api_getin
+    47 0000001D 56                              	PUSH	ESI
+    48 0000001E 89 C7                           	MOV	EDI,EAX
+    49 00000020 E8 [00000000]                   	CALL	_api_getout
+    50 00000025 83 C4 10                        	ADD	ESP,16
+    51 00000028 89 45 80                        	MOV	DWORD [-128+EBP],EAX
+    52 0000002B                                 L19:
+    53 0000002B 3B 7D 80                        	CMP	EDI,DWORD [-128+EBP]
+    54 0000002E 74 5D                           	JE	L13
+    55 00000030                                 L21:
+    56 00000030 56                              	PUSH	ESI
+    57 00000031 E8 [00000000]                   	CALL	_api_getout
+    58 00000036 89 C3                           	MOV	EBX,EAX
+    59 00000038 50                              	PUSH	EAX
+    60 00000039 56                              	PUSH	ESI
+    61 0000003A E8 [00000000]                   	CALL	_api_get
+    62 0000003F 0F BE C0                        	MOVSX	EAX,AL
+    63 00000042 50                              	PUSH	EAX
+    64 00000043 8D 45 84                        	LEA	EAX,DWORD [-124+EBP]
+    65 00000046 68 [0000000D]                   	PUSH	LC2
+    66 0000004B 50                              	PUSH	EAX
+    67 0000004C E8 [00000000]                   	CALL	_sprintf
+    68 00000051 6A 20                           	PUSH	32
+    69 00000053 68 [00000011]                   	PUSH	LC3
+    70 00000058 E8 [00000000]                   	CALL	_api_putstr1
+    71 0000005D A1 [00000004]                   	MOV	EAX,DWORD [_time_waiting]
+    72 00000062 83 C4 20                        	ADD	ESP,32
+    73 00000065 85 C0                           	TEST	EAX,EAX
+    74 00000067 7E 03                           	JLE	L25
+    75 00000069                                 L18:
+    76 00000069 48                              	DEC	EAX
+    77 0000006A 75 FD                           	JNE	L18
+    78 0000006C                                 L25:
+    79 0000006C 8D 43 01                        	LEA	EAX,DWORD [1+EBX]
+    80 0000006F 99                              	CDQ
+    81 00000070 F7 3D [00000000]                	IDIV	DWORD [_buffer_size]
+    82 00000076 52                              	PUSH	EDX
+    83 00000077 89 D3                           	MOV	EBX,EDX
+    84 00000079 56                              	PUSH	ESI
+    85 0000007A E8 [00000000]                   	CALL	_api_changeout
+    86 0000007F 6A 00                           	PUSH	0
+    87 00000081 53                              	PUSH	EBX
+    88 00000082 56                              	PUSH	ESI
+    89 00000083 E8 [00000000]                   	CALL	_api_change
+    90 00000088 83 C4 14                        	ADD	ESP,20
+    91 0000008B EB 9E                           	JMP	L19
+    92 0000008D                                 L13:
+    93 0000008D 6A 20                           	PUSH	32
+    94 0000008F 68 [00000030]                   	PUSH	LC1
+    95 00000094 E8 [00000000]                   	CALL	_api_putstr1
+    96 00000099 A1 [00000004]                   	MOV	EAX,DWORD [_time_waiting]
+    97 0000009E 5A                              	POP	EDX
+    98 0000009F 85 C0                           	TEST	EAX,EAX
+    99 000000A1 59                              	POP	ECX
+   100 000000A2 7E 03                           	JLE	L23
+   101 000000A4                                 L12:
+   102 000000A4 48                              	DEC	EAX
+   103 000000A5 75 FD                           	JNE	L12
+   104 000000A7                                 L23:
+   105 000000A7 56                              	PUSH	ESI
+   106 000000A8 E8 [00000000]                   	CALL	_api_getin
+   107 000000AD 89 C7                           	MOV	EDI,EAX
+   108 000000AF 58                              	POP	EAX
+   109 000000B0 3B 7D 80                        	CMP	EDI,DWORD [-128+EBP]
+   110 000000B3 74 D8                           	JE	L13
+   111 000000B5 E9 FFFFFF76                     	JMP	L21

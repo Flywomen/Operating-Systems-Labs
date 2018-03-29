@@ -1,0 +1,39 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_a.0
+     7 00000000                                 	EXTERN	_api_putstr0
+     8 00000000                                 	EXTERN	_b.1
+     9 00000000                                 	EXTERN	_c.2
+    10 00000000                                 	EXTERN	_api_end
+    11 00000000                                 [FILE "hello4.c"]
+    12                                          [SECTION .data]
+    13 00000000                                 	ALIGNB	4
+    14 00000000                                 _a.0:
+    15 00000000 00000001                        	DD	1
+    16 00000004                                 _b.1:
+    17 00000004 62                              	DB	98
+    18 00000005                                 LC0:
+    19 00000005 63 00                           	DB	"c",0x00
+    20 00000007 00                              	ALIGNB	4
+    21 00000008                                 _c.2:
+    22 00000008 [00000005]                      	DD	LC0
+    23                                          [SECTION .text]
+    24 00000000                                 	GLOBAL	_HariMain
+    25 00000000                                 _HariMain:
+    26 00000000 55                              	PUSH	EBP
+    27 00000001 89 E5                           	MOV	EBP,ESP
+    28 00000003 FF 35 [00000000]                	PUSH	DWORD [_a.0]
+    29 00000009 E8 [00000000]                   	CALL	_api_putstr0
+    30 0000000E 0F BE 05 [00000004]             	MOVSX	EAX,BYTE [_b.1]
+    31 00000015 50                              	PUSH	EAX
+    32 00000016 E8 [00000000]                   	CALL	_api_putstr0
+    33 0000001B 68 [00000004]                   	PUSH	_b.1
+    34 00000020 E8 [00000000]                   	CALL	_api_putstr0
+    35 00000025 FF 35 [00000008]                	PUSH	DWORD [_c.2]
+    36 0000002B E8 [00000000]                   	CALL	_api_putstr0
+    37 00000030 83 C4 10                        	ADD	ESP,16
+    38 00000033 C9                              	LEAVE
+    39 00000034 E9 [00000000]                   	JMP	_api_end

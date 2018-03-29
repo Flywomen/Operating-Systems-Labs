@@ -1,0 +1,68 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_api_initmalloc
+     7 00000000                                 	EXTERN	_api_malloc
+     8 00000000                                 	EXTERN	_api_free
+     9 00000000                                 	EXTERN	_api_printFreeMem
+    10 00000000                                 	EXTERN	_api_putstr0
+    11 00000000                                 	EXTERN	_api_end
+    12 00000000                                 [FILE "freeMem.c"]
+    13                                          [SECTION .data]
+    14 00000000                                 LC0:
+    15 00000000 2D 2D 41 66 74 65 72 20 6D 61   	DB	"--After malloc--",0x0A,0x00
+       0000000A 6C 6C 6F 63 2D 2D 0A 00 
+    16                                          [SECTION .text]
+    17 00000000                                 	GLOBAL	_HariMain
+    18 00000000                                 _HariMain:
+    19 00000000 55                              	PUSH	EBP
+    20 00000001 31 C0                           	XOR	EAX,EAX
+    21 00000003 89 E5                           	MOV	EBP,ESP
+    22 00000005 B9 00000006                     	MOV	ECX,6
+    23 0000000A 57                              	PUSH	EDI
+    24 0000000B 83 EC 20                        	SUB	ESP,32
+    25 0000000E 8D 7D DC                        	LEA	EDI,DWORD [-36+EBP]
+    26 00000011 FC                              	CLD
+    27 00000012 F3                              	REP
+    28 00000013 AB                              	STOSD
+    29 00000014 E8 [00000000]                   	CALL	_api_initmalloc
+    30 00000019 68 00000100                     	PUSH	256
+    31 0000001E E8 [00000000]                   	CALL	_api_malloc
+    32 00000023 68 00000200                     	PUSH	512
+    33 00000028 89 45 DC                        	MOV	DWORD [-36+EBP],EAX
+    34 0000002B E8 [00000000]                   	CALL	_api_malloc
+    35 00000030 68 00000080                     	PUSH	128
+    36 00000035 89 45 E0                        	MOV	DWORD [-32+EBP],EAX
+    37 00000038 E8 [00000000]                   	CALL	_api_malloc
+    38 0000003D 6A 40                           	PUSH	64
+    39 0000003F 89 45 E4                        	MOV	DWORD [-28+EBP],EAX
+    40 00000042 E8 [00000000]                   	CALL	_api_malloc
+    41 00000047 68 00000080                     	PUSH	128
+    42 0000004C 89 45 E8                        	MOV	DWORD [-24+EBP],EAX
+    43 0000004F E8 [00000000]                   	CALL	_api_malloc
+    44 00000054 68 00000400                     	PUSH	1024
+    45 00000059 89 45 EC                        	MOV	DWORD [-20+EBP],EAX
+    46 0000005C E8 [00000000]                   	CALL	_api_malloc
+    47 00000061 68 00000200                     	PUSH	512
+    48 00000066 FF 75 E0                        	PUSH	DWORD [-32+EBP]
+    49 00000069 89 45 F0                        	MOV	DWORD [-16+EBP],EAX
+    50 0000006C E8 [00000000]                   	CALL	_api_free
+    51 00000071 83 C4 20                        	ADD	ESP,32
+    52 00000074 6A 40                           	PUSH	64
+    53 00000076 FF 75 E8                        	PUSH	DWORD [-24+EBP]
+    54 00000079 E8 [00000000]                   	CALL	_api_free
+    55 0000007E 68 00000400                     	PUSH	1024
+    56 00000083 FF 75 F0                        	PUSH	DWORD [-16+EBP]
+    57 00000086 E8 [00000000]                   	CALL	_api_free
+    58 0000008B E8 [00000000]                   	CALL	_api_printFreeMem
+    59 00000090 6A 30                           	PUSH	48
+    60 00000092 E8 [00000000]                   	CALL	_api_malloc
+    61 00000097 68 [00000000]                   	PUSH	LC0
+    62 0000009C E8 [00000000]                   	CALL	_api_putstr0
+    63 000000A1 E8 [00000000]                   	CALL	_api_printFreeMem
+    64 000000A6 E8 [00000000]                   	CALL	_api_end
+    65 000000AB 8B 7D FC                        	MOV	EDI,DWORD [-4+EBP]
+    66 000000AE C9                              	LEAVE
+    67 000000AF C3                              	RET

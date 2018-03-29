@@ -1,0 +1,54 @@
+text size :   1562(0x0061A)
+data size :    115(0x00073)
+bss  size :      0(0x00000)
+
+0x00000024 : (.text)
+0x00000024 : _HariMain
+0x000000DE : _api_putstr1
+0x000000DE : (.text)
+0x000000F0 : _api_sharealloc
+0x000000F0 : (.text)
+0x00000102 : _api_get
+0x00000102 : (.text)
+0x00000114 : _api_change
+0x00000114 : (.text)
+0x0000012A : _api_getin
+0x0000012A : (.text)
+0x00000138 : _api_getout
+0x00000138 : (.text)
+0x00000146 : _api_changeout
+0x00000146 : (.text)
+0x00000158 : (.text)
+0x00000158 : _HariStartup
+0x00000161 : _sprintf
+0x00000161 : (.text)
+0x00000175 : (.text)
+0x000001B1 : _strtoul0
+0x00000284 : (.text)
+0x000002AC : _vsprintf
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x0000D000 : (.data)
+0x0000D000 : _buffer_size
+0x0000D004 : _time_waiting
+0x0000D053 : (.data)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)

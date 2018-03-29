@@ -1,0 +1,27 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_a.0
+     7 00000000                                 	EXTERN	_api_showAddr
+     8 00000000                                 	EXTERN	_api_end
+     9 00000000                                 [FILE "showAddr.c"]
+    10                                          [SECTION .data]
+    11 00000000                                 	ALIGNB	4
+    12 00000000                                 _a.0:
+    13 00000000 00000001                        	DD	1
+    14                                          [SECTION .text]
+    15 00000000                                 	GLOBAL	_HariMain
+    16 00000000                                 _HariMain:
+    17 00000000 55                              	PUSH	EBP
+    18 00000001 89 E5                           	MOV	EBP,ESP
+    19 00000003 68 [00000000]                   	PUSH	_a.0
+    20 00000008 E8 [00000000]                   	CALL	_api_showAddr
+    21 0000000D 58                              	POP	EAX
+    22 0000000E A1 [00000000]                   	MOV	EAX,DWORD [_a.0]
+    23 00000013                                 L2:
+    24 00000013 85 C0                           	TEST	EAX,EAX
+    25 00000015 75 FC                           	JNE	L2
+    26 00000017 C9                              	LEAVE
+    27 00000018 E9 [00000000]                   	JMP	_api_end

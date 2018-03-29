@@ -1,0 +1,16 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [BITS 32]
+     4 00000000                                 [FILE "api028.nas"]
+     5 00000000                                 
+     6 00000000                                 		GLOBAL	_api_printFreeMem
+     7 00000000                                 
+     8                                          [SECTION .text]
+     9 00000000                                 
+    10 00000000                                 _api_printFreeMem:					; int api_printFreeMem(void);
+    11 00000000 53                              				  PUSH 		EBX
+    12 00000001 2E 8B 1D 00000020               				  MOV		EBX,[CS:0x0020]
+    13 00000008 BA 0000001C                     				  MOV		EDX,28
+    14 0000000D CD 40                           				  INT		0x40
+    15 0000000F 5B                              				  POP		EBX
+    16 00000010 C3                              				  RET
